@@ -11,7 +11,7 @@ extension Task {
     @discardableResult
     public static func execute(
         priority: TaskPriority? = nil,
-        fetch: @escaping () async throws -> Void,
+        withoutResult fetch: @escaping () async throws -> Void,
         onReady: @escaping ((any Error)?) -> Void
     ) -> Task<Void, any Error> {
         Task<Void, any Error>(priority: priority) {
@@ -27,7 +27,7 @@ extension Task {
     @discardableResult
     public static func execute(
         priority: TaskPriority? = nil,
-        fetch: @escaping () async throws -> Void,
+        withoutResult fetch: @escaping () async throws -> Void,
         onSuccess: @escaping () -> Void,
         onFailure: @escaping (any Error) -> Void
     ) -> Task<Void, any Error> {
@@ -44,7 +44,7 @@ extension Task {
     @discardableResult
     public static func execute<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
-        fetch: @escaping () async throws -> FetchResult,
+        withResult fetch: @escaping () async throws -> FetchResult,
         onReady: @escaping (Result<FetchResult, Error>) -> Void
     ) -> Task<FetchResult, any Error> {
         Task<FetchResult, any Error>(priority: priority) {
@@ -55,7 +55,7 @@ extension Task {
     @discardableResult
     public static func execute<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
-        fetch: @escaping () async throws -> FetchResult,
+        withResult fetch: @escaping () async throws -> FetchResult,
         onSuccess: @escaping (FetchResult) -> Void,
         onFailure: @escaping (any Error) -> Void
     ) -> Task<FetchResult, any Error> {
