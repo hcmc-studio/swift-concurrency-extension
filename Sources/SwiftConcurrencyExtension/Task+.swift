@@ -8,6 +8,7 @@
 import Foundation
 
 extension Task {
+    @discardableResult
     public static func execute(
         priority: TaskPriority? = nil,
         fetch: @escaping () async throws -> Void,
@@ -23,6 +24,7 @@ extension Task {
         }
     }
     
+    @discardableResult
     public static func execute(
         priority: TaskPriority? = nil,
         fetch: @escaping () async throws -> Void,
@@ -39,6 +41,7 @@ extension Task {
         }
     }
     
+    @discardableResult
     public static func execute<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
         fetch: @escaping () async throws -> FetchResult,
@@ -49,6 +52,7 @@ extension Task {
         }
     }
     
+    @discardableResult
     public static func execute<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
         fetch: @escaping () async throws -> FetchResult,
