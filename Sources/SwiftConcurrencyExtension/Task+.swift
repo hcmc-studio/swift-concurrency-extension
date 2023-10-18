@@ -10,7 +10,7 @@ extension Task {
     public static func execute(
         priority: TaskPriority? = nil,
         withoutResult fetch: @escaping () async throws -> Void,
-        onReady: @escaping ((any Error)?) -> Void
+        onReady: @escaping ((any Error)?) -> Void = { _ in }
     ) -> Task<Void, any Error> {
         Task<Void, any Error>(priority: priority) {
             try await operation(fetch: fetch, onReady: { result in
@@ -26,8 +26,8 @@ extension Task {
     public static func execute(
         priority: TaskPriority? = nil,
         withoutResult fetch: @escaping () async throws -> Void,
-        onSuccess: @escaping () -> Void,
-        onFailure: @escaping (any Error) -> Void
+        onSuccess: @escaping () -> Void = {},
+        onFailure: @escaping (any Error) -> Void = { _ in }
     ) -> Task<Void, any Error> {
         Task<Void, any Error>(priority: priority) {
             try await operation(fetch: fetch, onReady: { result in
@@ -43,7 +43,7 @@ extension Task {
     public static func execute<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
         withResult fetch: @escaping () async throws -> FetchResult,
-        onReady: @escaping (Result<FetchResult, Error>) -> Void
+        onReady: @escaping (Result<FetchResult, Error>) -> Void = { _ in }
     ) -> Task<FetchResult, any Error> {
         Task<FetchResult, any Error>(priority: priority) {
             try await operation(fetch: fetch, onReady: onReady)
@@ -54,8 +54,8 @@ extension Task {
     public static func execute<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
         withResult fetch: @escaping () async throws -> FetchResult,
-        onSuccess: @escaping (FetchResult) -> Void,
-        onFailure: @escaping (any Error) -> Void
+        onSuccess: @escaping (FetchResult) -> Void = { _ in },
+        onFailure: @escaping (any Error) -> Void = { _ in }
     ) -> Task<FetchResult, any Error> {
         Task<FetchResult, any Error>(priority: priority) {
             try await operation(fetch: fetch, onReady: { result in
@@ -70,7 +70,7 @@ extension Task {
     private static func operation<FetchResult: Sendable>(
         priority: TaskPriority? = nil,
         fetch: () async throws -> FetchResult,
-        onReady: (Result<FetchResult, Error>) -> Void
+        onReady: (Result<FetchResult, Error>) -> Void = { _ in }
     ) async rethrows -> FetchResult {
         do {
             let fetchResult = try await fetch()

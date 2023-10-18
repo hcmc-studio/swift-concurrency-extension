@@ -8,6 +8,29 @@
 import Foundation
 
 extension Sequence {
+    public func forEachSerial(
+        action: (Element) async throws -> Void
+    ) async rethrows {
+        for element in self {
+            try await action(element)
+        }
+    }
+    
+    public func forEachParallel(
+        priority: TaskPriority? = nil,
+        action: @escaping (Element) async throws -> Void
+    ) async rethrows {
+        var tasks = [Task<Void, any Error>]()
+        for element in self {
+            tasks.append(Task<Void, any Error>(priority: priority) {
+                try await action(element)
+            })
+        }
+        for task in tasks {
+            try await { try await task.value }()
+        }
+    }
+    
     public func mapSerial<Result>(
         transform: (Element) async throws -> Result
     ) async rethrows -> [Result] {
