@@ -19,9 +19,5 @@ let package = Package(
         .target(
             name: "SwiftConcurrencyExtension"
         ),
-        .testTarget(
-            name: "SwiftConcurrencyExtensionTests",
-            dependencies: ["SwiftConcurrencyExtension"]
-        ),
     ]
 )

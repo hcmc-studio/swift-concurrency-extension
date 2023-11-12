@@ -15,13 +15,21 @@ public actor Atomic<Value> {
     }
 }
 
+extension Atomic {
+    public func compareAndSet(predicate: (Value) -> Bool, new supplier: () -> Value) {
+        if predicate(self.value) {
+            self.value = supplier()
+        }
+    }
+}
+
 extension Atomic where Value: BinaryInteger {
     public func increment(by delta: Value = 1) {
-        value += delta
+        self.value += delta
     }
     
     public func decrement(by delta: Value = 1) {
-        value -= delta
+        self.value -= delta
     }
     
     public func getAndIncrement(by delta: Value = 1) -> Value {
@@ -32,9 +40,9 @@ extension Atomic where Value: BinaryInteger {
     }
     
     public func incrementAndGet(by delta: Value = 1) -> Value {
-        value += delta
+        self.value += delta
         
-        return value
+        return self.value
     }
     
     public func getAndDecrement(by delta: Value = 1) -> Value {
@@ -45,8 +53,8 @@ extension Atomic where Value: BinaryInteger {
     }
     
     public func decrementAndGet(by delta: Value = 1) -> Value {
-        value -= delta
+        self.value -= delta
         
-        return value
+        return self.value
     }
 }
