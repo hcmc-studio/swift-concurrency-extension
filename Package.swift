@@ -15,9 +15,15 @@ let package = Package(
             targets: ["SwiftConcurrencyExtension"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-collections.git", .upToNextMajor(from: "1.0.6")),
+    ],
     targets: [
         .target(
-            name: "SwiftConcurrencyExtension"
+            name: "SwiftConcurrencyExtension",
+            dependencies: [
+                .product(name: "Collections", package: "swift-collections")
+            ]
         ),
     ]
 )
