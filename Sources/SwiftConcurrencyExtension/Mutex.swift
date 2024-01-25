@@ -1,6 +1,7 @@
 //
 //  Mutex.swift
-//
+//  Thanks to pookjw from GitHub
+//  https://pookjw.github.io/Develop/About_Actor_Concurrency/article.html
 //
 //  Created by Ji-Hwan Kim on 1/25/24.
 //
