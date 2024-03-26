@@ -16,12 +16,14 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-algorithms.git", .upToNextMajor(from: "1.2.0")),
         .package(url: "https://github.com/apple/swift-collections.git", .upToNextMajor(from: "1.0.6")),
     ],
     targets: [
         .target(
             name: "SwiftConcurrencyExtension",
             dependencies: [
+                .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Collections", package: "swift-collections")
             ]
         ),
